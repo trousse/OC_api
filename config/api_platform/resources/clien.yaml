@@ -1,0 +1,8 @@
+App\Entity\Client:
+  itemOperations:
+  collectionOperations:
+    register:
+      method: POST
+      input: App\Dto\CreateClient
+      normalization_context:
+        groups: [ 'user:item:get' ]

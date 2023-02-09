@@ -9,8 +9,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\Table(name="`user`")
  */
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User
 {
     /**
      * @ORM\Id
@@ -22,24 +23,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $username;
+    private $firstName;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $roles = [];
-
-
-    /**
-     * @var string The hashed password
-     * @ORM\Column(type="string")
-     */
-    private $password;
+    private $lastName;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
-     * @ORM\Column(type="App\Entity\Client")
      */
     private $client;
 
@@ -49,82 +42,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @deprecated since Symfony 5.3, use getUserIdentifier instead
+     * @return mixed
      */
-    public function getUsername(): string
+    public function getFirstName()
     {
-        return (string) $this->username;
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
+        return $this->firstName;
     }
 
     /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
+     * @param mixed $firstName
      */
-    public function getUserIdentifier(): string
+    public function setFirstName($firstName): void
     {
-        return (string) $this->username;
+        $this->firstName = $firstName;
     }
 
     /**
-     * @see UserInterface
+     * @return mixed
      */
-    public function getRoles(): array
+    public function getLastName()
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
+        return $this->lastName;
     }
 
     /**
-     * @see PasswordAuthenticatedUserInterface
+     * @param mixed $lastName
      */
-    public function getPassword(): string
+    public function setLastName($lastName): void
     {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Returning a salt is only needed, if you are not using a modern
-     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
-     *
-     * @see UserInterface
-     */
-    public function getSalt(): ?string
-    {
-        return null;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function eraseCredentials()
-    {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        $this->lastName = $lastName;
     }
 
     public function getClient(): ?object
