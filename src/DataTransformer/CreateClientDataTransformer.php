@@ -7,7 +7,7 @@ use ApiPlatform\Core\Serializer\AbstractItemNormalizer;
 use App\Entity\Client;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-final class CreateUserDataTransformer implements DataTransformerInterface
+final class CreateClientDataTransformer implements DataTransformerInterface
 {
     private $securityEncoder;
 

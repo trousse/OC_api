@@ -4,16 +4,16 @@ namespace App\DataTransformer;
 
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
 use ApiPlatform\Core\Serializer\AbstractItemNormalizer;
-use App\Entity\Client;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use App\Entity\User;
+use Symfony\Component\Security\Core\Security;
 
-final class CreateClientDataTransformer implements DataTransformerInterface
+final class CreateUserDataTransformer implements DataTransformerInterface
 {
-    private $securityEncoder;
+    private $security;
 
-    public function __construct(UserPasswordEncoderInterface $securityEncoder)
+    public function __construct(Security $security)
     {
-        $this->securityEncoder = $securityEncoder;
+        $this->security = $security;
     }
 
     /**
@@ -21,11 +21,13 @@ final class CreateClientDataTransformer implements DataTransformerInterface
      */
     public function transform($data, string $to, array $context = [])
     {
-        $client = new Client();
-        $client->setEmail($data->email);
-        $client->setPassword($this->securityEncoder->encodePassword($client, $data->password));
+        $user = new User();
+        $user->setFirstName($data->firstName);
+        $user->setLastName($data->lastName);
 
-        return $client;
+        $user->setClient($this->security->getUser());
+
+        return $user;
     }
 
     /**
@@ -33,10 +35,10 @@ final class CreateClientDataTransformer implements DataTransformerInterface
      */
     public function supportsTransformation($data, string $to, array $context = []): bool
     {
-        if ($data instanceof Client) {
+        if ($data instanceof User) {
             return false;
         }
 
-        return Client::class === $to && null !== ($context['input']['class'] ?? null);
+        return User::class === $to && null !== ($context['input']['class'] ?? null);
     }
 }

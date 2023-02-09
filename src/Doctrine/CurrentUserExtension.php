@@ -9,7 +9,7 @@ use Doctrine\ORM\QueryBuilder;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Security;
 
-final class CurrentUserExtention implements QueryCollectionExtensionInterface, QueryItemExtensionInterface
+final class CurrentUserExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface
 {
     private $security;
 
@@ -35,10 +35,7 @@ final class CurrentUserExtention implements QueryCollectionExtensionInterface, Q
         }
 
         $rootAlias = $queryBuilder->getRootAliases()[0];
-        if ($resourceClass == User::class) {
-            $queryBuilder->andWhere(":user_current MEMBER OF $rootAlias.users");
-        }
-
-        $queryBuilder->setParameter(':user_current', $client);
+        $queryBuilder->andWhere(sprintf('%s.client = :current_user', $rootAlias));
+        $queryBuilder->setParameter('current_user', $client->getId());
     }
 }

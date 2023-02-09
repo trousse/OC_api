@@ -2,7 +2,7 @@
 
 namespace App\Dto;
 
-final class CreateUser {
+final class CreateClient {
 
     public $email;
 
