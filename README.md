@@ -11,7 +11,7 @@ composer > 2.0.0
 
 #### _For install dependencies :
 
-<code> $ composer install </code>
+<code> $ composer install --dev </code>
 
 #### _You need to create your .env.local with .env and modify with your parameters.
 
@@ -19,6 +19,7 @@ composer > 2.0.0
 
 <code> $ php bin/console doctrine:database:create </code>
 <code> $ php bin/console doctrine:migrations:migrate </code>.
+<code> $ php bin/console doctrine:fixtures:load </code>.
 
 #### _To generate SSL keys for JWT Token :
 
