@@ -1,5 +1,9 @@
 App\Entity\Client:
   itemOperations:
+    get:
+      normalization_context:
+        groups: [ 'client:item:get' ]
+      security: 'is_granted("ROLE_ADMIN")'
   collectionOperations:
     register:
       method: POST

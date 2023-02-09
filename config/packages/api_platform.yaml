@@ -1,7 +1,16 @@
 api_platform:
+    title: "Api for bileMo App"
+
+    description: "Documentation for Api"
+
+    version: "0.0.1"
     mapping:
-        paths: ['%kernel.project_dir%/src/Entity']
+        #for yaml
+        paths: [ '%kernel.project_dir%/config/api_platform/resources' ]
     patch_formats:
         json: ['application/merge-patch+json']
     swagger:
-        versions: [3]
+        api_keys:
+            apiKey:
+                name: Authorization
+                type: header

@@ -1,0 +1,10 @@
+App\Entity\Client:
+  attributes:
+     id:
+        groups: ['client:item:get']
+     email:
+        groups: ['client:item:get', 'client:item:put', 'client:collection:post']
+     name:
+        groups: ['client:item:get', 'client:item:put', 'client:collection:post']
+     users:
+        groups: ['client:item:get']
